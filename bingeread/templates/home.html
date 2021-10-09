@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home | Bingeread {% endblock %} 
+{% block styles%} 
+<link rel="stylesheet" href="{% static 'styles/home.css' %}">
+<link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+<link rel="stylesheet" href="{% static 'styles/background.css' %}">
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css" />
+
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+
+    <div class="featured-container">
+        <div class="title">
+            <h1>Featured Today</h1>
+            <div class="title-border"></div>
+        </div>
+        
+        <div class="items">
+            {% comment "The dynamic version works, but the bookcovers are of poor image quality" %}
+            {% for item in todays_content %}
+                <div class="item active">
+                    <img src="{{item.volumeInfo.imageLinks.thumbnail}}" onclick="location.href='{% url 'bookpage' id=item.id %}'">
+                </div>
+            {% endfor %}
+            {% endcomment %}
+            <div class="item active">
+                <img src="{% static 'styles/images/cover-images/midnight.jpg'%}"onclick="location.href ='http://127.0.0.1:8000/books/M53SDwAAQBAJ'">
+            </div>
+            <div class=" item next">
+                <img src="{% static 'styles/images/cover-images/night.jpg'%}" onclick="location.href ='http://127.0.0.1:8000/books/XVDfAAAAQBAJ'">
+            </div>
+            <div class="item">
+                <img src="{% static 'styles/images/cover-images/wealth.jpg'%}" onclick="location.href ='http://127.0.0.1:8000/books/Nl1oAwAAQBAJ'">
+            </div>
+            <div class="item">
+                <img src="{% static 'styles/images/cover-images/exile.jpg'%}" onclick="location.href ='http://127.0.0.1:8000/books/XaXoAQAAQBAJ'">
+            </div>
+            <div class="item prev">
+                <img src="{% static 'styles/images/cover-images/american.jpg'%}" onclick="location.href ='http://127.0.0.1:8000/books/Gd_mGRCwW1QC'">
+            </div>
+            <div class="button-container">
+                <div class="button"></div>
+                <div class="button"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-body"> 
+        <div class="carousel-title">
+            <h2>| Classics ></h2>
+            <h4>Must read classics for you</h4>
+        </div>
+
+        <div id="slick" data-slick='{}'>
+            {% for item in classics_content %}
+                <div onclick="location.href='{% url 'bookpage' id=item.id %}'">
+                    <img src="{{item.volumeInfo.imageLinks.thumbnail}}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="carousel-body-1">
+        <div class="carousel-title">
+            <h2>| Fantasy ></h2>
+            <h4>Fantasy books everyone should read</h4>
+        </div>
+    
+        <div id="slick" data-slick='{}'>
+            {% for item in fantasy_content %}
+                <div onclick="location.href='{% url 'bookpage' id=item.id %}'">
+                    <img src="{{item.volumeInfo.imageLinks.thumbnail}}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="carousel-body-2">
+        <div class="carousel-title">
+            <h2>| Editor's Picks ></h2>
+            <h4>Books that we have picked out for you</h4>
+        </div>
+    
+        <div id="slick" data-slick='{}'>
+            {% for item in editors_content %}   
+                <div onclick="location.href='{% url 'bookpage' id=item.id %}'">
+                    <img src="{{item.volumeInfo.imageLinks.thumbnail}}">
+                </div>
+            {% endfor %}
+        </div>
+    </div> 
+</div>
+
+<!-- Plugins for carousels -->
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.min.js"></script>
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

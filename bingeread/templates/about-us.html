@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+<link rel="stylesheet" href="{% static 'styles/background.css' %}"> 
+<link rel="stylesheet" href="{% static 'styles/about-us.css' %}">
+{% endblock %}
+
+{% block title %} About Us | Bingeread {% endblock %} 
+
+{% block content %}
+
+
+<div class= "container">
+
+  <div class="content">
+    
+    <div class="about">
+      <h1>About us:</h1>
+        <p>We are a group of students working together on Bingeread. Our vision with Bingeread is to help people on their journey to reading more books.</p>
+    </div>
+    
+    <div class="wrapper">
+      <h1>The team:</h1>
+      <div class="team">
+        <div class="team_member">
+          <h3>Torbjørn Lier</h3>
+          <p class="role">Backend</p>
+        </div>
+        <div class="team_member">
+          <h3>Sangeerth Sathiskumar</h3>
+          <p class="role">Backend</p>
+        </div>
+        <div class="team_member">
+          <h3>Abidmalik Abukar</h3>
+          <p class="role">Backend</p>
+        </div>
+        <div class="team_member">
+          <h3>Jon Anders Hopland Myklebust</h3>
+          <p class="role">Frontend</p>
+        </div>
+        <div class="team_member">
+          <h3>Marcel Grønvold</h3>
+          <p class="role">Frontend and design</p>
+        </div>
+      </div>	
+    </div>
+
+  </div>
+</div>
+    {% endblock %}

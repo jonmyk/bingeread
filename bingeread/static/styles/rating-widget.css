@@ -1,0 +1,106 @@
+.rating-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    color: white;
+}
+
+.collective-score {
+    border-right: 6px solid white;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.avg-score {
+    display: flex;
+    flex-direction: row;
+}
+
+.avg-score .star-svg {
+    margin-right: 5px;
+}
+
+.avg-score .output-field {
+    margin-right: 5px;
+}
+
+.avg-score .out-of-10 {
+    margin-top: 13px;
+}
+
+.score-count {
+    margin-left: 42px;
+    margin-bottom: 10px;
+}
+
+.user-score {
+    padding: 20px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.rating-button {
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+}
+
+.user-score .star-svg {
+    margin-right: 5px;
+}
+
+.rating-button:hover {
+    text-decoration: underline;
+}
+
+.rating-overlay {
+    /* left: 0; */
+    transform: translate(150px,0px);
+    z-index: 9999;
+    position: absolute;
+    /* background-color: white; */
+    background-color: #2f4858;
+    width:max-content;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.rating-overlay.hidden {
+    display: none;
+}
+
+.rating-overlay span {
+    font-size: 18px;
+    color: black;
+    padding: 4px;
+    transition: all 0.2s ease;
+}
+
+.rating-overlay span:hover,
+.rating-overlay span:hover ~ span,
+.rating-overlay span.checked,
+.rating-overlay span.checked ~ span {
+    color: white;
+}
+
+.rating-overlay .remove {
+    font-size: 18px;
+    color: white;
+    padding: 4px;
+    transition: all 0.2s ease;
+}
+
+.rating-overlay .remove:hover {
+    color: rgb(226, 48, 35);
+}
+
+.row-reverse {
+    display: flex;
+    flex-flow: row-reverse;
+}

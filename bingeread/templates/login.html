@@ -1,0 +1,82 @@
+{% extends 'baselogin.html' %}
+{% load static %}
+
+{% block title %} Log In | BingeRead {% endblock %} 
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'styles/login.css' %}">
+</head>
+
+<div class="container">
+    {% if messages %}
+        <div class="feedback-wrapper">
+            <div class="feedback-container">
+                <h1 class="fa fa-exclamation-circle" aria-hidden="true"></h1>
+                <div>
+                    <h4>There was a problem</h4>
+                    <p class="feedback">
+                        {% for message in messages %}
+                            &bull; {{ message }} <br>
+                        {% endfor %} 
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="user-card"> 
+
+        <div class="user-card-cover">
+            <img src="{% static cover %}" width="314" height="475">
+        </div>
+
+        <div class="user-card-login">
+            <div class="user-card-login-inner">
+
+                <div class="user-card-login-text">
+                    <h2>Log in to BingeRead</h2>
+                </div>
+                
+                <div class="d-flex justify-content-center form_container">
+                    <form method="post" id="loginform">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                            <input type="text" name="email" id="email" placeholder="Enter Email.." class="form-control">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" name="password" id="password" placeholder="Enter Password.." class="form-control" >
+                            <i class="fa fa-eye fa-lg" onclick="showPassword()" style="color: white;z-index:10; position:absolute; right:0; margin-top:12px; margin-right:10px; cursor:pointer;"></i>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <input class="btn login-btn" type="submit" value="Log in">
+                        </div>
+                    </form>
+                </div> 
+            </div>
+            
+            <div class="mt-4">
+                <div class="d-flex justify-content-center links">
+                    <a href="{% url 'register' %}" class="ml-3">Register an account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
+
+
+
+
+    

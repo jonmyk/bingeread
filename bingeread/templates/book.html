@@ -1,0 +1,230 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+<link rel="stylesheet" href="{% static 'styles/background.css' %}"> 
+<link rel="stylesheet" href="{% static 'styles/book.css' %}">
+<link rel="stylesheet" href="{% static 'styles/add-book-dropdown.css' %}">
+<link rel="stylesheet" href="{% static 'styles/rating-widget.css' %}">
+{% endblock %}
+
+
+{% block title %} {{content.volumeInfo.title}} | BingeRead {% endblock %} 
+
+{% block content %}
+
+<div class="content">
+    <div class ="row">
+        <div class="left-poster">
+            <div class="image">
+                {% if content.volumeInfo.imageLinks.thumbnail %}
+                    <img src="{{content.volumeInfo.imageLinks.thumbnail}}">
+                    {% else %}
+                    <img src="{% static 'styles/images/card-image.svg'%}" class="card-image">
+                {% endif %}
+                <div class="info">
+                    <div id="pages">
+                        {{content.volumeInfo.pageCount}} pages 
+                    </div>
+                    <div id="realease-date">
+                        Released: {{content.volumeInfo.publishedDate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class ="title">
+                <h1 id="bookTitle">
+                    {{content.volumeInfo.title}}
+                </h1>
+                <h3 id="author">
+                    By 
+                    {% if content.volumeInfo.authors %}
+                        {% for author in content.volumeInfo.authors %}
+                            {% if forloop.first or forloop.counter == content.volumeInfo.authors|length %}
+                                {% if content.volumeInfo.authors|length == 2 and forloop.counter == 2 %}
+                                    and {{author}}
+                                {% elif forloop.first and forloop.counter != content.volumeInfo.authors|length %}
+                                    {{author}},
+                                {% else %}
+                                    {{author}}
+                                {% endif %}
+                            {% elif forloop.counter == content.volumeInfo.authors|length|add:"-1" %}
+                                {{author}} and 
+                            {% else %}
+                                {{author}},
+                            {% endif %}
+                        {% endfor %}
+
+                    {% else %}
+                            unknown author
+                    {% endif %}
+                </h3>
+            </div>
+        
+            <div class="ratings"> 
+                {% include 'rating-widget.html' with id=content.id %}
+            </div>
+            
+            <div class="description">
+                <h3>Description:</h3>
+                
+                <div class="book-description">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    {% if content.volumeInfo.description %}
+                        {% if content.volumeInfo.description|striptags|length > 800 %}
+                            {{content.volumeInfo.description|striptags|length}}
+                            <script> var description = '{{content.volumeInfo.description|striptags}}';</script>
+                            <script src="{% static 'js/text-collapse.js' %}"></script>
+                        {% else %}
+                            <p>{{ content.volumeInfo.description|striptags}}</p>
+                        {% endif %}
+
+                    {% else %}
+                        <p> No description found</p>
+                    {% endif %}
+                </div>
+                
+            </div> 
+            
+            
+            <div class="categories">
+                <h3>Categories:</h3> 
+                <div class="cat-items">
+                    {% if content.volumeInfo.categories %}
+                    <ol class="tags">
+                        {% for tag in content.volumeInfo.categories %}
+                        <li class="tag">{{tag}}</li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                        <p>No categories linked to this title</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            
+        </div>
+        {% if user.is_authenticated %}
+        <div class="right-content">
+            <div class="bookshelf">
+                <div class="atl_dropdown addtolist-btn">
+                    <img src="{% static 'styles/images/bookmark-plus-fill.svg'%}"  width="100" height="100" class="bookmark">
+                    <div style="max-height:500px;" >
+                        {% for l in lists %}
+                            <button data-lid={{l.lid}} data-bid={{content.id}}><p>{{l.name}}</p></button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="right-content">
+            <div class="bookshelf">
+                <a href="{% url 'login' %}">
+                    <img src="{% static 'styles/images/bookmark-plus-fill.svg'%}"  width="100" height="100" class="bookmark">
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        
+
+    </div>
+
+    
+    <div class="row">
+        <div class="comment-section">
+            {% if user.is_authenticated %}
+                <div class ="reviews">
+                    <form class="reviews-form" action="{% url 'add_review' %}" method="POST">
+                        {% csrf_token %}
+                        <h1>Add a book review:</h1> <br>
+                            <div>
+                                <textarea border-radius="14" rows="5" cols="20" name="comment" id="comments" maxlength="120" style="font-size:1.2em;"placeholder="add a book review.."></textarea>
+                            </div>
+                            
+                        <div class="button">
+                            <input type="hidden" name="book_id" value={{content.id}}>
+                            <input type="submit" value="Submit">
+                        </div>
+                    </form>
+                    <div class="display-comments">
+                        <h1>User reviews ({{reviews}}) : </h1>
+                        {% for comment in comments%}
+                            <div class="comment-area">
+                                <div class ="name"><p><span class="name">{{comment.user.first_name}}:</span><span class="comment">&nbsp;&nbsp;{{comment.comment}}</span></p></div>
+                                <div class="date"><p>-{{comment.date}}</p></div>
+                            </div>
+                            <!-- <br> -->
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="display-comments">
+                    <h1>User reviews ({{reviews}}) : </h1>
+                    {% for comment in comments%}
+                    <div class="comment-area">
+                        <div class ="name"><p><span class="name">{{comment.user.first_name}}:</span><span class="comment">&nbsp;-{{comment.comment}}</span></p></div>
+                        <div class="date"><p>-{{comment.date}}</p></div>
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+                <div class="message">
+                    <a href="{% url 'login' %}">Log in or create a user to add a review</a>
+                </div>
+            {% endif %}
+
+
+        </div> 
+
+    </div>
+    
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	
+	// Add to list dropdown menu
+	$(document).on('click', '.atl_dropdown button', function(){
+		var listname = $(this).text();
+		$.ajax({
+			type:'POST',
+			url:'{% url "add_book" %}',
+			dataType:'json',
+			data:{
+				list_id: $(this).data('lid'),
+				book_id: $(this).data('bid'),
+				csrfmiddlewaretoken:'{{csrf_token}}',
+			},
+			success:function(response){
+				console.log('Book successfully added to ' + listname);
+				custom_popup("Book added to '" + listname + "'");
+			},
+			error:function(xhr){
+				console.log('Book was not added | ' + xhr.status + ' ' + xhr.statusText);
+				if (xhr.status == 409) {
+					custom_popup("Book already exists in '" + listname + "'");
+				} else {
+					custom_popup("Failed to add book to '" + listname + "'");
+				}
+			}
+		});
+	});
+
+	// Custom popup that displays the given message
+	function custom_popup(msg){
+		var $div = $('<div class="custom-popup">' + msg + '</div>').appendTo('body');
+		$div.hide().slideToggle(100).delay(3200).slideToggle('slow');
+	}
+</script>
+
+<script>
+    var csrf_token = '{{csrf_token}}';
+</script>
+<script src="{% static 'js/rating-widget.js' %}"></script>
+
+{% endblock %}
+

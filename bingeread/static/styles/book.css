@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box; 
+}    
+
+html, body {
+    font-size: 15px;
+}
+
+body{
+    background-color: #2f4858;
+    display: flex;
+    flex-direction: column;
+    color:white;
+}
+
+.content{
+    flex: 1 1 auto;
+}
+
+.row{
+    background-color: #416379;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 1100px;
+    margin:50px auto;
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.left-poster{
+    margin-right: 15px;
+    flex: 1 1 auto;
+    
+}
+
+.main-content{
+    flex:5 5 auto;
+}
+
+.right-content{
+    flex:1 1 auto;
+}
+
+.title{
+    display: inline-block;
+    border-bottom:2px solid white;
+    padding-bottom: 10px;
+}
+
+#bookTitle{
+    margin-bottom: 5px;
+    font-size: 50px;
+}
+
+.ratings{
+    margin-top: 10px;
+}
+
+ol.tags,li.tag{
+    list-style: none;
+    display: inline;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+.morelink {
+    color:white;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.morelink:hover{
+    text-decoration: underline;
+    color: white;
+}
+
+
+.description h3{
+    margin-top: 30px;
+}
+
+.book-description{
+    margin-top:5px;
+    font-style: italic;
+    line-height: 160%;
+}
+
+.categories{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.categories p{
+    margin-top:5px;
+    font-style: italic;
+    line-height: 160%;
+}
+
+.categories .cat-items ol{
+    margin-top:5px;
+    font-style: italic;
+}
+.cat-items li{
+    background:#7206f7;
+    margin-top: 10px;
+}
+
+.comment-section{
+    justify-content: start;
+    margin:0 148px;
+}
+
+textarea{
+    width: 622px;	
+    resize: none;
+	border: none;
+    white-space: pre-wrap;
+	/* border-radius: 20px; */
+	outline: none;
+	padding: 10px;
+	font-size: 1em;
+	color: #676767;
+    padding: 0 15px;
+	/* border: solid 3px #416379;	 */
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+
+.button input[type=Submit]{
+    margin-left: auto; 
+    display: block;
+    padding:0.7em 1.7em;
+    text-decoration:none;
+    font-weight:400;
+    background-color: #2f4858;
+    color:#FFFFFF;
+    box-shadow:inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12);
+    text-align:center;
+    margin-top: 5px;
+
+}
+
+.button input[type=Submit]:hover{
+    color:white;
+    cursor:pointer;
+    
+}    
+
+.button input[type=Submit]:active{
+    background-color:#999999;
+    box-shadow:inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12);
+}
+
+
+.reviews h1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    border-bottom:2px solid white;
+}
+
+.display-comments{
+    margin-bottom: 30px;
+}
+
+.display-comments h1 {
+    margin-top: 20px;
+    display: inline-block;
+    border-bottom:2px solid white;
+}
+
+span.name{
+    display: inline-block;
+}
+
+
+.display-comments p{
+    font-style: italic;
+    word-wrap: break-word;
+    width: 600px;
+    font-size: 17px;
+}
+
+.comment-area{
+    margin-top: 20px;
+    padding:8px 8px 0px 8px;
+    border: 1px solid white;
+}
+
+.comment-area .comment p{
+    word-wrap: break-word;
+    width: 600px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.comment-area .date p{
+    
+    font-style: italic;
+    display: flex;
+    margin-top:10px;
+
+}
+
+.message a{
+    margin-top: 25px;
+    margin-bottom: 50px;
+    color:white;
+    text-decoration: none;
+    display: block;
+}
+
+.message a:hover{
+    text-decoration: underline;
+}
+
+nav .search_box{
+    top: 10px;
+}
+
+.custom-popup{
+    width: max-content;
+    height: max-content;
+    padding: 8px 24px 8px 24px;
+    border: solid 1px #2F4858;
+    border-radius: 4px;
+    background-color: white;
+    color: black;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    font-size: 20px;
+  }
+
+  .footer{
+      height: 60px;
+  }

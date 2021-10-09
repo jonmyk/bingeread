@@ -1,0 +1,35 @@
+{% load static %}
+
+<div class="rating-container" data-book-id="{{id}}">
+    <div class="collective-score">
+        <div class="avg-score">
+            <img class="star-svg" src="{% static 'styles/images/star-fill.svg'%}">
+            <h1 class="output-field">0.0</h1>
+            <h3 class="out-of-10">/10</h3>
+        </div>
+        <h6><span class="score-count">0</span> ratings</h6>
+    </div>
+    {% if user.is_authenticated %}
+        <div class="user-score">
+            <div class="rating-button">
+                    <img class="star-svg"src="{% static 'styles/images/star.svg'%}">
+                    <h2 class="output-field">Rate this</h2>
+            </div>
+            <div class="rating-overlay hidden">
+                <div class="row-reverse">
+                    <span class="fas fa-star" data-score="10"></span>
+                    <span class="fas fa-star" data-score="9"></span>
+                    <span class="fas fa-star" data-score="8"></span>
+                    <span class="fas fa-star" data-score="7"></span>
+                    <span class="fas fa-star" data-score="6"></span>
+                    <span class="fas fa-star" data-score="5"></span>
+                    <span class="fas fa-star" data-score="4"></span>
+                    <span class="fas fa-star" data-score="3"></span>
+                    <span class="fas fa-star" data-score="2"></span>
+                    <span class="fas fa-star" data-score="1"></span>
+                    <div class="fas fa-times-circle remove"></div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

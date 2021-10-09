@@ -1,0 +1,78 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="{% static 'styles/images/bookmark-fill.svg' %}" />
+
+        <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% block styles %}
+        {% endblock %}
+
+        <script src ="https://kit.fontawesome.com/67c66657c7.js"></script>
+        <title>{% block title %} Home | Bingeread {% endblock %}</title>
+    </head>
+
+    <body>
+        <nav>
+            <a href="{% url 'Homepage'%}" class="icon">BingeRead</a>
+
+            <div class= "search_box">
+                <form name="searchbarform" method="GET" action="{% url 'search_page' %}" autocomplete="off">
+                    <input type="search" name="q" placeholder="Search">
+                    <input type="submit" value="Submit" style="display:none">
+                </form>
+                <span class="fa fa-search" onclick="searchbarform.submit()"></span>
+            </div>
+
+            <ol>
+                <li class="bookshelf">
+                    <a href="{% url 'bookshelf_view' %}">
+                        <img src="{% static 'styles/images/bookmark-plus.svg'%}" class="bookmark">
+                        Bookshelf
+                    </a>
+                    {% if user.is_authenticated %}
+                    
+                </li class="dropdown_container">   
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            <img src="{% static 'styles/images/person-circle.svg'%}" class="avatar">
+                            {{user.first_name}}
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'logout' %}"> Logout
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                
+                {% else %}
+
+                <li>
+                    <a href="{% url 'login' %}">Log in</a>
+                </li>
+                
+                {% endif %}
+            </ol>
+        </nav>
+            
+        {% block content %}
+        {% endblock %}
+
+        <footer class="footer">
+            <ul>
+                <li><a href="{% url 'About' %}">About Us</a></li>
+                <li><a href="#">|</a></li>
+                <li><a href="{% url 'Homepage' %}">Home</a></li>
+                <li><a href="#">|</a></li>
+                <li><a href="{% url 'bookshelf_view' %}">Bookshelf</a></li>
+            </ul>
+        </footer>
+
+    </body>
+</html>

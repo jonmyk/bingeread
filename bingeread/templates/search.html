@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Search | BingeRead {% endblock %}
+
+{% block styles%} 
+<link rel="stylesheet" href="{% static 'styles/search_result.css' %}">
+<link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+<link rel="stylesheet" href="{% static 'styles/rating-widget.css' %}">
+<link rel="stylesheet" href="{% static 'styles/add-book-dropdown.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+	<div class="advanced_search">
+		<h1>Search</h1>
+		<div class= "second_search_box">
+			<form name="searchbarform" method="GET" action="{% url 'search_page' %}">
+				<input type="search" name="q" placeholder="search for book..." {% if query.q %} value="{{ query.q }}" {% endif %}>
+				<input type="submit" value="Submit" style="display:none">
+			</form>
+		</div>
+		<p id="adv-options-toggle" onclick="$('#adv-options-container').slideToggle();">Advanced search
+			<i class="fas fa-caret-down"></i>
+		</p>
+		<div id="adv-options-container" style="display:none;">
+			<form class="searching_form" id="searchform" method="GET" action="{% url 'search_page' %}">
+				<label for="title_input">Title:</label>
+				<input type="text" name="title" id="title_input" placeholder="E.g. harry potter"><br>
+				<label for="author_input">Authors:</label>
+				<input type="text" name="authors" id="author_input" placeholder="E.g. rowling"><br>
+				<label for="langcode_input">Language:</label>
+				<select name="langcode" id="langcode_input">
+					<option value="" selected>Any</option>
+					<option value="en">English</option>
+					<option value="no">Norwegian</option>
+				</select><br>
+				<input type="submit" value="Search" id="search-btn">
+				<input type="reset" id="reset-btn">
+			</form>
+		</div>
+	</div>
+</section>
+	
+<div class="results">
+	<div class="container">
+		
+		<table id="search_results">
+			<div class="feedback-section">
+				<div class="feedback">
+					{% if query.q %}
+						<p>Your search "{{ query.q }}" generated {{content.totalItems}} search results</p>
+					{% elif query.authors %}
+						<p>Your advanced search generated {{content.totalItems}} search results</p>
+					{% endif %}
+				</div>
+			</div>
+			{% if content.totalItems > 0 %}
+			{% for book in content.items %}
+			<tr class="search_entry"> 
+				<td class= "book_photo">
+					{% if book.volumeInfo.imageLinks.thumbnail %}
+						<img src="{{book.volumeInfo.imageLinks.thumbnail}}" onclick="location.href='{% url 'bookpage' id=book.id %}'">
+						{% else %}
+						<img src="{% static 'styles/images/card-image.svg'%}" onclick="location.href='{% url 'bookpage' id=book.id %}'">
+					{% endif %}				
+				</td>
+				<td class ="book_desc">
+					<div class="info">
+						<div class="book-name">
+							<a href="{% url 'bookpage' id=book.id %}">
+								{{book.volumeInfo.title}}
+							</a>
+						</div>
+						<div class ="author">
+							<h5>
+								By 
+								{% if book.volumeInfo.authors %}
+									{% if book.volumeInfo.authors|length > 2 %}
+										{{book.volumeInfo.authors.0}} and {{book.volumeInfo.authors|length|add:"-1"}} others
+									{% elif book.volumeInfo.authors|length > 1 %}
+										{{book.volumeInfo.authors.0}} and {{book.volumeInfo.authors|length|add:"-1"}} other
+									{% else %}
+										{{book.volumeInfo.authors.0}}
+									{% endif %}
+
+								{% else %}
+										unknown author
+								{% endif %}
+
+							</h5>
+						</div>
+						<div class ="rating">
+							{% include 'rating-widget.html' with id=book.id %}
+						</div>
+						
+						<div class="categories">
+							<span class="fiction">
+								{% if book.volumeInfo.categories %}
+									{% for tag in book.volumeInfo.categories %}
+									{{tag}}{% if not forloop.last %}, {% endif %}
+									{% endfor %}
+								{% else %}
+									no tag found
+								{% endif %}
+							</span>
+						</div>
+					</div>
+				{% if user.is_authenticated %}
+				<td>
+					<div class="add_to">
+						<div class="atl_dropdown addtolist-btn">
+							<img src="{% static 'styles/images/bookmark-plus-fill.svg'%}"  width="100" height="100" class="bookmark">
+							<div>
+								{% for l in lists %}
+									<button data-lid={{l.lid}} data-bid={{book.id}}><p>{{l.name}}</p></button>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</td>
+				{% endif %}
+			</tr>
+			{% endfor %}
+			{% endif %}
+		</table>
+	</div>
+
+	<div class="pagination">
+		<ul>
+		</ul>
+	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	var totalPages = Math.ceil({{content.totalItems}}/{{itemsPerPage}});
+	console.log({{content.totalItems}})
+	var curr_page = {{query.page}};
+	
+	var kwd = ('{{query.q}}')?('q={{query.q}}&'):('');
+	kwd += ('{{query.title}}')?('title={{query.title}}&'):('');
+	kwd += ('{{query.authors}}')?('authors={{query.authors}}&'):('');
+	kwd += ('{{query.langcode}}')?('langcode={{query.langcode}}&'):('');
+	kwd += 'page=';
+
+	$(document).on('click', '.numb', function(){		
+		window.location.href="{% url 'search_page' %}?"+kwd+$(this).text();
+	});
+	$(document).on('click', '.btn.prev', function(){
+		window.location.href="{% url 'search_page' %}?"+kwd+$('.numb.active').text();
+	});
+	$(document).on('click', '.btn.next', function(){
+		window.location.href="{% url 'search_page' %}?"+kwd+$('.numb.active').text();
+	});
+
+	// Add to list dropdown menu
+	$(document).on('click', '.atl_dropdown button', function(){
+		var listname = $(this).text();
+		$.ajax({
+			type:'POST',
+			url:'{% url "add_book" %}',
+			dataType:'json',
+			data:{
+				list_id: $(this).data('lid'),
+				book_id: $(this).data('bid'),
+				csrfmiddlewaretoken:'{{csrf_token}}',
+			},
+			success:function(response){
+				console.log('Book successfully added to ' + listname);
+				custom_popup("Book added to '" + listname + "'");
+			},
+			error:function(xhr){
+				console.log('Book was not added | ' + xhr.status + ' ' + xhr.statusText);
+				if (xhr.status == 409) {
+					custom_popup("Book already exists in '" + listname + "'");
+				} else {
+					custom_popup("Failed to add book to '" + listname + "'");
+				}
+			}
+		});
+	});
+
+	// Custom popup that displays the given message
+	function custom_popup(msg){
+		var $div = $('<div class="custom-popup">' + msg + '</div>').appendTo('body');
+		$div.hide().slideToggle(100).delay(3200).slideToggle('slow');
+	}
+
+</script>
+
+<script src="{% static 'js/pagination.js' %}"></script>
+
+<script>
+    var csrf_token = '{{csrf_token}}';
+</script>
+<script src="{% static 'js/rating-widget.js' %}"></script>
+
+
+
+{% endblock %}

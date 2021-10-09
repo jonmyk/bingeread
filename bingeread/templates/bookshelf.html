@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Bookshelf | Bingeread {% endblock %} 
+{% block styles%} 
+    <link rel="stylesheet" href="{% static 'styles/list.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/rating-widget.css' %}">
+{% endblock %}
+  
+{% block content %}
+<div class="bookshelf-container">
+    <div class="search-container">
+        <div class="search-wrapper">
+            <div class="search-title">
+                <h1 class="search_title_h1">Bookshelf</h1>
+            </div>
+            <div class="search-box-wrapper">
+                <div class="search-box" id="list_filter">
+                    {% comment %} 
+                    <form name="searchbarform" method="GET" action="{% url 'search_page' %}">
+                        <input type="search" name="q" placeholder="Search">
+                        <input type="submit" value="Submit" style="display:none">
+                    </form>
+                    {% endcomment %}
+                    <input type="search" placeholder="Search in list">
+                    <span class="fa fa-search"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="list-container">
+            <div class="list-title">
+                <h1>List</h1>
+            </div>
+            <div class="list-name-container">
+                <ul id="bookshelf-list"></ul>
+            </div>
+            <div class="add-list">
+                <img class="add-list-icon" src="{% static 'styles/images/plus-circle.svg'%}">
+                <h2 class="new-list">New List</h2>
+            </div>
+        </div>
+        <div class="book-container">
+            <div class="book-container-title">
+                <h1 class="book-title-container">Books</h1>
+            </div>
+            <div class="book-name-container">
+                <ul id="bookshelf-book"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var get_lists_url = '{% url "get_lists" %}';
+    var create_list_url = '{% url "create_list" %}';
+    var rename_list_url = '{% url "rename_list" %}';
+    var delete_list_url = '{% url "delete_list" %}';
+    var get_books_url = '{% url "get_books" %}';
+    var book_template_url = '{% url "entry_template" %}';
+    var remove_book_url = '{% url "remove_book" %}';
+    var info_url = '{% url "get_score_global" %}';
+    var get_user_score_url = '{% url "get_score_user" %}';
+    var edit_svg = '{% static "styles/images/pencil-square-32.svg" %}';
+    var csrf_token = '{{csrf_token}}';
+    var filter_url = '{% url "list_filter" %}';
+    var home_page = '{% url "Homepage" %}';
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/rating-widget.js' %}"></script>
+<script src="{% static 'js/bookshelf.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+body{
+    background: #2f4858;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+  
+
+.content{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: #416379;
+    display: flex;
+    flex:1 1 auto;
+    margin:50px auto;
+    width: 100%;
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+  
+}
+
+.content h1{
+    font-size: 100px;
+}
+
+.text{
+    position: relative;
+    right:-20px;
+    bottom: -60px;
+}
+
+.footer{
+    position: fixed;
+    bottom:0;
+}

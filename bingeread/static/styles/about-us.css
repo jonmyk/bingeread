@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css?family=Allura|Josefin+Sans');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background:#222222; 
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+html{
+  height: 100%;
+}
+.container{
+    background-color: #222222; 
+    display: flex;
+    flex:1 1 auto;
+    margin:50px auto;
+    width: 1200px;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.about {
+  margin-top: 100px;
+  margin:auto;
+  width: 850px;
+  
+  
+}
+
+.about h1 {
+  position: relative;
+  font-weight: normal;
+  margin-top: 100px;
+  left:400px;
+
+  font-size: 45px;
+  margin-bottom: 15px;
+  margin: 0;
+  color: white;
+
+}
+
+.about p {
+  position: relative;
+  left:200px;
+  font-size: 20px;
+  line-height: 1.6;
+  color: white;
+  border-bottom: 5px solid #715037;
+}
+
+.wrapper{
+  margin:15px auto;
+  width: 850px;
+  left:200px;
+  position: relative;
+  
+}
+
+.wrapper h1{
+  left:200px;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  margin:0;
+  font-size: 45px;
+  color:white;
+}
+
+.team .team_member{
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 500px;
+  line-height: 35px;
+  position: relative;
+}
+
+.team .team_member:last-child{
+  margin-bottom: 0px;
+}
+
+.team .team_member h3{
+  color: white;
+  font-size: 25px;
+}
+
+.team .team_member p.role{
+  color:white;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.footer{
+  height: 60px;
+}
+
+nav .search_box{
+  top: 10px;
+}

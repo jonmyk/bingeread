@@ -1,0 +1,88 @@
+{% extends 'baselogin.html' %}
+{% load static %}
+
+{% block title %} Register | BingeRead {% endblock %} 
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'styles/register.css' %}">
+</head>
+
+<div class="container">
+    {% if messages %}
+        <div class="feedback-wrapper">
+            <div class="feedback-container">
+                <h1 class="fa fa-exclamation-circle" aria-hidden="true"></h1>
+                <div>
+                    <h4>There was a problem</h4>
+                    <p class="feedback">
+                        {% for message in messages %}
+                            &bull; {{ message }} <br>
+                        {% endfor %} 
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="user-card"> 
+
+        <div class="user-card-cover">
+            <img src="{% static cover %}" class="user-card-image" width="314" height="475">
+        </div>
+
+        <div class="user-card-register">
+            <div class="user-card-register-inner">
+
+                <div class="user-card-register-title">
+                    <h3 class="form-title">Register an account</h3>
+                </div>
+                
+                <form method="post" id="registerform">
+                    {% csrf_token %}
+                    <div class="input-group mb-1">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" name="first_name" id="first_name" placeholder="Enter your first name.." class="form-control">
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" name="last_name" id="last_name" placeholder="Enter your Last name.." class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input type="text" name="email" id="email" placeholder="Enter an Email.." class="form-control" >
+                    </div>
+                    <div class="input-group mb-4">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" name="password1" id="password1" placeholder="Enter Password.." class="form-control" >
+                    </div>
+                    <div class="input-group mb-5">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" name="password2" id="password2" placeholder="Re-enter Password.." class="form-control" >
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                        <input class="btn login_btn" type="submit" value="Sign up">
+                    </div>
+                </form>
+
+                <div class="mt-4">
+                    <div class="d-flex justify-content-center links">
+                        <a href="{% url 'login' %}" class="ml-2">Already have an account? Sign in</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+{% endblock %}

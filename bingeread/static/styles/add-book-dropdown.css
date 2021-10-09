@@ -1,0 +1,38 @@
+.addtolist-btn div{
+  position: absolute;
+  z-index: 1;
+  margin:auto 10px;
+  visibility: hidden;
+  max-height:150px; 
+  overflow-y:scroll;
+}
+
+.addtolist-btn div button{
+    width: 150px;
+    display: block;
+    border: none;
+    background-color:#5d849e;
+    color: white;
+    transition: .2s;
+    padding: 14px 0px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: start;
+    height: 10%;
+  }
+
+  .addtolist-btn div button p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 10px;
+  }
+  
+  
+  .addtolist-btn:hover div{
+    visibility: visible;
+  }
+  
+  .addtolist-btn button:hover{
+    background-color: #c8a184; 
+  }
